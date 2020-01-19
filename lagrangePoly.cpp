@@ -4,7 +4,6 @@
 using namespace std;
 
 
-
 float a[]={0,5,6,7,8,9,10,11,12,13};
 float w[]={0,1,2,3};
 float b[]={0,13,15,17};
@@ -24,7 +23,8 @@ float lagrangeEval( float x , float w[], float  b[])
 int main()
 {
     
-
+    int check=lagrangeEval(w[1],w,b);
+    cout<<"get check"<<check<<"   ";
 
     for(int i=1;i<10;i++)
     {
