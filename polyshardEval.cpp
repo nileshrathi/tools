@@ -19,7 +19,9 @@ struct Data
 };
 
 
-double interpolate(Data f[], int xi, int n) 
+float coeff[4][10];
+
+double interpolate(Data f[], int xi, int n, int coeff_index) 
 { 
     double result = 0; // Initialize result 
   
@@ -27,11 +29,15 @@ double interpolate(Data f[], int xi, int n)
     { 
         // Compute individual terms of above formula 
         double term = f[i].y; 
+        double temp=1;
         for (int j=0;j<n;j++) 
         { 
             if (j!=i) 
-                term = term*(xi - f[j].x)/double(f[i].x - f[j].x); 
-        } 
+                temp = temp*(xi - f[j].x)/double(f[i].x - f[j].x); 
+        }
+
+        coeff[coeff_index][i+1]=temp;
+        term=term*temp; 
   
         // Add current term to result 
         result += term; 
@@ -113,10 +119,34 @@ for(int i=0;i<10;i++)
 
 
     Data f[] = {{5,10}, {6,5}, {7,-2}, {8,-11},{9,-22},{10,-35},{11,-50},{12,-67},{13,-86}}; 
+
+
+    
+
   
     // Using the interpolate function to obtain a data point 
     // corresponding to x=3 
-    cout << "Value of f(3) is : " << interpolate(f, int(w[3]), 9); 
+    cout << "Value of f(1) is : " << interpolate(f, int(w[1]), 9,1)<<"\n"; 
+    cout << "Value of f(1) is : " << interpolate(f, int(w[2]), 9,2)<<"\n"; 
+    cout << "Value of f(1) is : " << interpolate(f, int(w[3]), 9,3)<<"\n"; 
+
+
+    cout<<"Coefficients are...."<<"\n";
+
+    for(int i=1;i<10;i++)
+    {
+        cout<<coeff[2][i]<<" ";
+    }
+    cout<<"\n";
+
+
+    int temp=0;
+    for(int i=1;i<10;i++)
+    {
+        temp=temp+(f[i-1].y)*coeff[2][i];
+    }
+    cout<<"linear comnination encoded blocks X coefficients "<<temp<<"\n";
+
 
 
     return 0;
